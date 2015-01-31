@@ -1,7 +1,7 @@
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "BPDocumentPrivate.h"
 
-@interface BPDocumentTests : SenTestCase
+@interface BPDocumentTests : XCTestCase
 @end
 
 @implementation BPDocumentTests
@@ -34,27 +34,27 @@
 
 - (void)testInitialization
 {
-    STAssertNotNil(document, @"Expected non-nil document");
+    XCTAssertNotNil(document, @"Expected non-nil document");
 }
 
 - (void)testElementsAccessor_forPointerEquality
 {
     NSArray *elements = [document elements];
-    STAssertEquals([document elements], elements, @"Expected same elements");
+    XCTAssertEqual([document elements], elements, @"Expected same elements");
 }
 
 - (void)testChildElements
 {
-    STAssertEquals([[document elements] count], 2U, @"Expected 2 elements");
-    STAssertEquals([[document elements][0] elementType], BPParagraph, @"Expected first element type to be BPParagraph");
-    STAssertEquals([[document elements][1] elementType], BPParagraph, @"Expected second element type to be BPParagraph");
+    XCTAssertEqual([[document elements] count], 2U, @"Expected 2 elements");
+    XCTAssertEqual([[document elements][0] elementType], BPParagraph, @"Expected first element type to be BPParagraph");
+    XCTAssertEqual([[document elements][1] elementType], BPParagraph, @"Expected second element type to be BPParagraph");
 }
 
 #if __has_feature(objc_subscripting)
 
 - (void)testNumericSubscripting
 {
-    STAssertEquals(document[0], [[document elements] objectAtIndex:0], @"Expected document subscripting to return an element");
+    XCTAssertEqual(document[0], [[document elements] objectAtIndex:0], @"Expected document subscripting to return an element");
 }
 
 #endif

@@ -11,8 +11,6 @@
 		5E007AEB16FA17D200F8CFFD /* BPMarkdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E007AEA16FA17D100F8CFFD /* BPMarkdownView.m */; };
 		5E5BC81C16E004FA00165503 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E5BC81B16E004FA00165503 /* Foundation.framework */; };
 		5E5BC82116E004FA00165503 /* Bypass.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5E5BC82016E004FA00165503 /* Bypass.h */; };
-		5E5BC82B16E004FA00165503 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E5BC82A16E004FA00165503 /* SenTestingKit.framework */; };
-		5E5BC82E16E004FA00165503 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E5BC81B16E004FA00165503 /* Foundation.framework */; };
 		5E5BC83116E004FA00165503 /* libBypass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E5BC81816E004FA00165503 /* libBypass.a */; };
 		5E5BC83716E004FA00165503 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E5BC83516E004FA00165503 /* InfoPlist.strings */; };
 		5E5BC85016E005E700165503 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E5BC84F16E005E700165503 /* UIKit.framework */; };
@@ -23,13 +21,18 @@
 		5E5BC87F16E134C200165503 /* BPDocumentTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC87E16E134C200165503 /* BPDocumentTests.mm */; };
 		5E5BC88216E1448C00165503 /* BPParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC88116E1448C00165503 /* BPParserTests.m */; };
 		5E5BC88716E15C5800165503 /* BPAttributedStringConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC88616E15C5800165503 /* BPAttributedStringConverter.m */; };
-		5E5BC89116E79B2E00165503 /* array.c in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC88B16E79B2E00165503 /* array.c */; };
-		5E5BC89216E79B2E00165503 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC88D16E79B2E00165503 /* buffer.c */; };
-		5E5BC89316E79B2E00165503 /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC88F16E79B2E00165503 /* markdown.c */; };
 		5E5BC89A16E79B6200165503 /* document.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC89416E79B6200165503 /* document.cpp */; };
 		5E5BC89B16E79B6200165503 /* element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC89616E79B6200165503 /* element.cpp */; };
 		5E5BC89C16E79B6200165503 /* parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BC89816E79B6200165503 /* parser.cpp */; };
 		5E5BC8A116E7BE9400165503 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E5BC8A016E7BE9400165503 /* CoreText.framework */; };
+		6B4306D91A7D3A9C00E37D92 /* autolink.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B4306D01A7D3A9C00E37D92 /* autolink.c */; };
+		6B4306DA1A7D3A9C00E37D92 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B4306D21A7D3A9C00E37D92 /* buffer.c */; };
+		6B4306DB1A7D3A9C00E37D92 /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B4306D51A7D3A9C00E37D92 /* markdown.c */; };
+		6B4306DC1A7D3A9C00E37D92 /* stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B4306D71A7D3A9C00E37D92 /* stack.c */; };
+		6B4306E41A7D3B2F00E37D92 /* houdini_href_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B4306DE1A7D3B2F00E37D92 /* houdini_href_e.c */; };
+		6B4306E51A7D3B2F00E37D92 /* houdini_html_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B4306DF1A7D3B2F00E37D92 /* houdini_html_e.c */; };
+		6B4306E61A7D3B2F00E37D92 /* html_smartypants.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B4306E11A7D3B2F00E37D92 /* html_smartypants.c */; };
+		6B4306E71A7D3B2F00E37D92 /* html.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B4306E21A7D3B2F00E37D92 /* html.c */; };
 		6BE4F72716F0E9D100670C16 /* BPMarkdownPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE4F72616F0E9D100670C16 /* BPMarkdownPageView.m */; };
 /* End PBXBuildFile section */
 
@@ -63,10 +66,8 @@
 		5E007AEA16FA17D100F8CFFD /* BPMarkdownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMarkdownView.m; sourceTree = "<group>"; };
 		5E5BC81816E004FA00165503 /* libBypass.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBypass.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E5BC81B16E004FA00165503 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		5E5BC81F16E004FA00165503 /* Bypass-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bypass-Prefix.pch"; sourceTree = "<group>"; };
 		5E5BC82016E004FA00165503 /* Bypass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bypass.h; sourceTree = "<group>"; };
-		5E5BC82916E004FA00165503 /* BypassTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BypassTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E5BC82A16E004FA00165503 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		5E5BC82916E004FA00165503 /* BypassTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BypassTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E5BC83416E004FA00165503 /* BypassTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BypassTests-Info.plist"; sourceTree = "<group>"; };
 		5E5BC83616E004FA00165503 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5E5BC84F16E005E700165503 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -83,12 +84,6 @@
 		5E5BC88116E1448C00165503 /* BPParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPParserTests.m; sourceTree = "<group>"; };
 		5E5BC88516E15C5800165503 /* BPAttributedStringConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPAttributedStringConverter.h; sourceTree = "<group>"; };
 		5E5BC88616E15C5800165503 /* BPAttributedStringConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPAttributedStringConverter.m; sourceTree = "<group>"; };
-		5E5BC88B16E79B2E00165503 /* array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = array.c; path = ../../../../dep/libsoldout/array.c; sourceTree = "<group>"; };
-		5E5BC88C16E79B2E00165503 /* array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = array.h; path = ../../../../dep/libsoldout/array.h; sourceTree = "<group>"; };
-		5E5BC88D16E79B2E00165503 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = buffer.c; path = ../../../../dep/libsoldout/buffer.c; sourceTree = "<group>"; };
-		5E5BC88E16E79B2E00165503 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = buffer.h; path = ../../../../dep/libsoldout/buffer.h; sourceTree = "<group>"; };
-		5E5BC88F16E79B2E00165503 /* markdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = markdown.c; path = ../../../../dep/libsoldout/markdown.c; sourceTree = "<group>"; };
-		5E5BC89016E79B2E00165503 /* markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = markdown.h; path = ../../../../dep/libsoldout/markdown.h; sourceTree = "<group>"; };
 		5E5BC89416E79B6200165503 /* document.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = document.cpp; path = ../../../../src/document.cpp; sourceTree = "<group>"; };
 		5E5BC89516E79B6200165503 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = document.h; path = ../../../../src/document.h; sourceTree = "<group>"; };
 		5E5BC89616E79B6200165503 /* element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = element.cpp; path = ../../../../src/element.cpp; sourceTree = "<group>"; };
@@ -96,6 +91,21 @@
 		5E5BC89816E79B6200165503 /* parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = parser.cpp; path = ../../../../src/parser.cpp; sourceTree = "<group>"; };
 		5E5BC89916E79B6200165503 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = parser.h; path = ../../../../src/parser.h; sourceTree = "<group>"; };
 		5E5BC8A016E7BE9400165503 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		6B4306D01A7D3A9C00E37D92 /* autolink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = autolink.c; sourceTree = "<group>"; };
+		6B4306D11A7D3A9C00E37D92 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
+		6B4306D21A7D3A9C00E37D92 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
+		6B4306D31A7D3A9C00E37D92 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
+		6B4306D41A7D3A9C00E37D92 /* html_blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = html_blocks.h; sourceTree = "<group>"; };
+		6B4306D51A7D3A9C00E37D92 /* markdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = markdown.c; sourceTree = "<group>"; };
+		6B4306D61A7D3A9C00E37D92 /* markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = markdown.h; sourceTree = "<group>"; };
+		6B4306D71A7D3A9C00E37D92 /* stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stack.c; sourceTree = "<group>"; };
+		6B4306D81A7D3A9C00E37D92 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		6B4306DE1A7D3B2F00E37D92 /* houdini_href_e.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = houdini_href_e.c; sourceTree = "<group>"; };
+		6B4306DF1A7D3B2F00E37D92 /* houdini_html_e.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = houdini_html_e.c; sourceTree = "<group>"; };
+		6B4306E01A7D3B2F00E37D92 /* houdini.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = houdini.h; sourceTree = "<group>"; };
+		6B4306E11A7D3B2F00E37D92 /* html_smartypants.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = html_smartypants.c; sourceTree = "<group>"; };
+		6B4306E21A7D3B2F00E37D92 /* html.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = html.c; sourceTree = "<group>"; };
+		6B4306E31A7D3B2F00E37D92 /* html.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = html.h; sourceTree = "<group>"; };
 		6BE4F72516F0E9D100670C16 /* BPMarkdownPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMarkdownPageView.h; sourceTree = "<group>"; };
 		6BE4F72616F0E9D100670C16 /* BPMarkdownPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMarkdownPageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,8 +125,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E5BC82B16E004FA00165503 /* SenTestingKit.framework in Frameworks */,
-				5E5BC82E16E004FA00165503 /* Foundation.framework in Frameworks */,
 				5E5BC83116E004FA00165503 /* libBypass.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,7 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				5E5BC81816E004FA00165503 /* libBypass.a */,
-				5E5BC82916E004FA00165503 /* BypassTests.octest */,
+				5E5BC82916E004FA00165503 /* BypassTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,7 +156,6 @@
 			children = (
 				5E5BC8A016E7BE9400165503 /* CoreText.framework */,
 				5E5BC81B16E004FA00165503 /* Foundation.framework */,
-				5E5BC82A16E004FA00165503 /* SenTestingKit.framework */,
 				5E5BC84F16E005E700165503 /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -162,19 +169,10 @@
 				5E5BC85216E0066E00165503 /* BPParser.mm */,
 				6BE4F72216F0E90500670C16 /* Model */,
 				6BE4F72416F0E99000670C16 /* View */,
-				5E5BC86716E007AC00165503 /* Soldout */,
+				6B4306CC1A7D3A1100E37D92 /* Snudown */,
 				5E5BC85416E006D700165503 /* Core */,
-				5E5BC81E16E004FA00165503 /* Supporting Files */,
 			);
 			path = Bypass;
-			sourceTree = "<group>";
-		};
-		5E5BC81E16E004FA00165503 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5E5BC81F16E004FA00165503 /* Bypass-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		5E5BC83216E004FA00165503 /* BypassTests */ = {
@@ -210,17 +208,43 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
-		5E5BC86716E007AC00165503 /* Soldout */ = {
+		6B4306CC1A7D3A1100E37D92 /* Snudown */ = {
 			isa = PBXGroup;
 			children = (
-				5E5BC88B16E79B2E00165503 /* array.c */,
-				5E5BC88C16E79B2E00165503 /* array.h */,
-				5E5BC88D16E79B2E00165503 /* buffer.c */,
-				5E5BC88E16E79B2E00165503 /* buffer.h */,
-				5E5BC88F16E79B2E00165503 /* markdown.c */,
-				5E5BC89016E79B2E00165503 /* markdown.h */,
+				6B4306DD1A7D3B1200E37D92 /* html */,
+				6B4306CF1A7D3A4200E37D92 /* src */,
 			);
-			name = Soldout;
+			name = Snudown;
+			path = ../../../../dep/snudown;
+			sourceTree = "<group>";
+		};
+		6B4306CF1A7D3A4200E37D92 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				6B4306D01A7D3A9C00E37D92 /* autolink.c */,
+				6B4306D11A7D3A9C00E37D92 /* autolink.h */,
+				6B4306D21A7D3A9C00E37D92 /* buffer.c */,
+				6B4306D31A7D3A9C00E37D92 /* buffer.h */,
+				6B4306D41A7D3A9C00E37D92 /* html_blocks.h */,
+				6B4306D51A7D3A9C00E37D92 /* markdown.c */,
+				6B4306D61A7D3A9C00E37D92 /* markdown.h */,
+				6B4306D71A7D3A9C00E37D92 /* stack.c */,
+				6B4306D81A7D3A9C00E37D92 /* stack.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		6B4306DD1A7D3B1200E37D92 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				6B4306DE1A7D3B2F00E37D92 /* houdini_href_e.c */,
+				6B4306DF1A7D3B2F00E37D92 /* houdini_html_e.c */,
+				6B4306E01A7D3B2F00E37D92 /* houdini.h */,
+				6B4306E11A7D3B2F00E37D92 /* html_smartypants.c */,
+				6B4306E21A7D3B2F00E37D92 /* html.c */,
+				6B4306E31A7D3B2F00E37D92 /* html.h */,
+			);
+			path = html;
 			sourceTree = "<group>";
 		};
 		6BE4F72216F0E90500670C16 /* Model */ = {
@@ -278,7 +302,6 @@
 				5E5BC82416E004FA00165503 /* Sources */,
 				5E5BC82516E004FA00165503 /* Frameworks */,
 				5E5BC82616E004FA00165503 /* Resources */,
-				5E5BC82716E004FA00165503 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -287,8 +310,8 @@
 			);
 			name = BypassTests;
 			productName = BypassTests;
-			productReference = 5E5BC82916E004FA00165503 /* BypassTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 5E5BC82916E004FA00165503 /* BypassTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -328,22 +351,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		5E5BC82716E004FA00165503 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		5E5BC81416E004FA00165503 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -352,15 +359,20 @@
 				5E5BC85316E0066E00165503 /* BPParser.mm in Sources */,
 				5E5BC87316E0083D00165503 /* BPDocument.mm in Sources */,
 				5E5BC87616E0085000165503 /* BPElement.mm in Sources */,
+				6B4306DB1A7D3A9C00E37D92 /* markdown.c in Sources */,
+				6B4306DA1A7D3A9C00E37D92 /* buffer.c in Sources */,
 				5E5BC88716E15C5800165503 /* BPAttributedStringConverter.m in Sources */,
-				5E5BC89116E79B2E00165503 /* array.c in Sources */,
-				5E5BC89216E79B2E00165503 /* buffer.c in Sources */,
-				5E5BC89316E79B2E00165503 /* markdown.c in Sources */,
 				5E5BC89A16E79B6200165503 /* document.cpp in Sources */,
 				5E5BC89B16E79B6200165503 /* element.cpp in Sources */,
+				6B4306E41A7D3B2F00E37D92 /* houdini_href_e.c in Sources */,
+				6B4306DC1A7D3A9C00E37D92 /* stack.c in Sources */,
 				5E5BC89C16E79B6200165503 /* parser.cpp in Sources */,
+				6B4306D91A7D3A9C00E37D92 /* autolink.c in Sources */,
 				6BE4F72716F0E9D100670C16 /* BPMarkdownPageView.m in Sources */,
+				6B4306E51A7D3B2F00E37D92 /* houdini_html_e.c in Sources */,
+				6B4306E61A7D3B2F00E37D92 /* html_smartypants.c in Sources */,
 				5E007AEB16FA17D200F8CFFD /* BPMarkdownView.m in Sources */,
+				6B4306E71A7D3B2F00E37D92 /* html.c in Sources */,
 				58D9DFA414A385A9337D153E /* BPDisplaySettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,7 +433,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -444,7 +456,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -453,12 +465,11 @@
 		5E5BC83E16E004FA00165503 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BOOST_HOME = /usr/local/include;
+				BOOST_HOME = "${SRCROOT}/../../../dep/boost";
+				BUNDLE_LOADER = "";
 				DSTROOT = /tmp/Bypass.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Bypass/Bypass-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(BOOST_HOME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -468,12 +479,11 @@
 		5E5BC83F16E004FA00165503 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BOOST_HOME = /usr/local/include;
+				BOOST_HOME = "${SRCROOT}/../../../dep/boost";
+				BUNDLE_LOADER = "";
 				DSTROOT = /tmp/Bypass.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Bypass/Bypass-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(BOOST_HOME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -485,13 +495,11 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Bypass/Bypass-Prefix.pch";
 				INFOPLIST_FILE = "BypassTests/BypassTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -500,13 +508,11 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Bypass/Bypass-Prefix.pch";
 				INFOPLIST_FILE = "BypassTests/BypassTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

@@ -1,7 +1,7 @@
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "BPElementPrivate.h"
 
-@interface BPElementTests : SenTestCase
+@interface BPElementTests : XCTestCase
 @end
 
 @implementation BPElementTests
@@ -39,73 +39,73 @@
 
 - (void)testInitialization
 {
-    STAssertNotNil(element, @"Expected non-nil element");
+    XCTAssertNotNil(element, @"Expected non-nil element");
 }
 
 - (void)testElementTypeAccessor
 {
-    STAssertEquals([element elementType], BPParagraph, @"Expected same type");
+    XCTAssertEqual([element elementType], BPParagraph, @"Expected same type");
 }
 
 - (void)testTextAccessor_forObjectEquality
 {
-    STAssertEqualObjects([element text], @"text", @"Expected equivalent text");
+    XCTAssertEqualObjects([element text], @"text", @"Expected equivalent text");
 }
 
 - (void)testTextAccessor_forPointerEquality
 {
     NSString *text = [element text];
-    STAssertEquals([element text], text, @"Expected same string");
+    XCTAssertEqual([element text], text, @"Expected same string");
 }
 
 - (void)testAttributeAccessor_forObjectEquality
 {
     NSDictionary *expected = @{@"a": @"A", @"b": @"B"};
-    STAssertEqualObjects([element attributes], expected, @"Expected equivalent attributes");
+    XCTAssertEqualObjects([element attributes], expected, @"Expected equivalent attributes");
 }
 
 - (void)testAttributeAccessor_forPointerEquality
 {
     NSDictionary *attributes = [element attributes];
-    STAssertEquals([element attributes], attributes, @"Expected same attributes");
+    XCTAssertEqual([element attributes], attributes, @"Expected same attributes");
 }
 
 - (void)testChildAccessor_forPointerEquality
 {
     NSArray *childElements = [element childElements];
-    STAssertEquals([element childElements], childElements, @"Expected same child elements");
+    XCTAssertEqual([element childElements], childElements, @"Expected same child elements");
 }
 
 - (void)testChildElements
 {
-    STAssertEquals([[element childElements] count], 3U, @"Expected 3 child elements");
-    STAssertEquals([[element childElements][0] elementType], BPText, @"Expected first element type to be BPText");
-    STAssertEquals([[element childElements][1] elementType], BPDoubleEmphasis, @"Expected second element type to be BPDoubleEmphasis");
-    STAssertEquals([[element childElements][2] elementType], BPText, @"Expected third element type to be BPText");
+    XCTAssertEqual([[element childElements] count], 3U, @"Expected 3 child elements");
+    XCTAssertEqual([[element childElements][0] elementType], BPText, @"Expected first element type to be BPText");
+    XCTAssertEqual([[element childElements][1] elementType], BPDoubleEmphasis, @"Expected second element type to be BPDoubleEmphasis");
+    XCTAssertEqual([[element childElements][2] elementType], BPText, @"Expected third element type to be BPText");
 }
 
 - (void)testIsBlockElementAccessor
 {
-    STAssertEquals([element isBlockElement], YES, @"Expected a block element");
-    STAssertEquals([[element childElements][0] isBlockElement], NO, @"Expected a span element");
+    XCTAssertEqual([element isBlockElement], YES, @"Expected a block element");
+    XCTAssertEqual([[element childElements][0] isBlockElement], NO, @"Expected a span element");
 }
 
 - (void)testForParentElement
 {
     BPElement *child = [element childElements][0];
-    STAssertEquals([child parentElement], element, @"Expected parent element to be specified");
+    XCTAssertEqual([child parentElement], element, @"Expected parent element to be specified");
 }
 
 #if __has_feature(objc_subscripting)
 
 - (void)testNumericSubscripting
 {
-    STAssertEquals(element[0], [[element childElements] objectAtIndex:0], @"Expected element subscripting to return a child element");
+    XCTAssertEqual(element[0], [[element childElements] objectAtIndex:0], @"Expected element subscripting to return a child element");
 }
 
 - (void)testAlphabeticSubscripting
 {
-    STAssertEqualObjects(element[@"a"], @"A", @"Expected alphabetic subscripting to return an attribute");
+    XCTAssertEqualObjects(element[@"a"], @"A", @"Expected alphabetic subscripting to return an attribute");
 }
 
 #endif

@@ -48,28 +48,29 @@ namespace Bypass {
 
 		// Block Element Callbacks
 
-		void parsedBlockCode(struct buf *ob, struct buf *text);
-		void parsedBlockQuote(struct buf *ob, struct buf *text);
-		void parsedHeader(struct buf *ob, struct buf *text, int level);
+		void parsedBlockCode(struct buf *ob, const struct buf *text, const struct buf *lang);
+		void parsedBlockQuote(struct buf *ob, const struct buf *text);
+		void parsedHeader(struct buf *ob, const struct buf *text, int level);
 		void parsedHrule(struct buf *ob);
-		void parsedList(struct buf *ob, struct buf *text, int flags);
-		void parsedListItem(struct buf *ob, struct buf *text, int flags);
-		void parsedParagraph(struct buf *ob, struct buf *text);
+		void parsedList(struct buf *ob, const struct buf *text, int flags);
+		void parsedListItem(struct buf *ob, const struct buf *text, int flags);
+		void parsedParagraph(struct buf *ob, const struct buf *text);
 
 		// Span Element Callbacks
 
-		int parsedAutolink(struct buf *ob, struct buf *link, enum mkd_autolink type);
-		int parsedCodeSpan(struct buf *ob, struct buf *text);
-		int parsedDoubleEmphasis(struct buf *ob, struct buf *text, char c);
-		int parsedEmphasis(struct buf *ob, struct buf *text, char c);
-		int parsedImage(struct buf *ob, struct buf *link, struct buf *title, struct buf *alt);
-		int parsedTripleEmphasis(struct buf *ob, struct buf *text, char c);
+		int parsedAutolink(struct buf *ob, const struct buf *link, enum mkd_autolink type);
+		int parsedCodeSpan(struct buf *ob, const struct buf *text);
+		int parsedDoubleEmphasis(struct buf *ob, const struct buf *text);
+		int parsedEmphasis(struct buf *ob, const struct buf *text);
+		int parsedImage(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *alt);
+		int parsedTripleEmphasis(struct buf *ob, const struct buf *text);
+        int parsedStrikethrough(struct buf *ob, const struct buf *text);
 		int parsedLinebreak(struct buf *ob);
-		int parsedLink(struct buf *ob, struct buf *link, struct buf *title, struct buf *content);
+		int parsedLink(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *content);
 
 		// Low Level Callbacks
 
-		void parsedNormalText(struct buf *ob, struct buf *text);
+		void parsedNormalText(struct buf *ob, const struct buf *text);
 
 		// Debugging
 
@@ -79,9 +80,9 @@ namespace Bypass {
 		Document document;
 		std::map<int, Element> elementSoup;
 		int elementCount;
-		void handleBlock(Type, struct buf *ob, struct buf *text = NULL, int extra = -1);
-		void handleSpan(Type, struct buf *ob, struct buf *text, struct buf *extra = NULL, struct buf *extra2 = NULL, bool output = true);
-		void handleNontextSpan(Type, struct buf *ob, struct buf *link, struct buf *title = NULL, struct buf *alt = NULL);
+		void handleBlock(Type, struct buf *ob, const struct buf *text = NULL, int extra = -1);
+		void handleSpan(Type, struct buf *ob, const struct buf *text, const struct buf *extra = NULL, const struct buf *extra2 = NULL, bool output = true);
+		void handleNontextSpan(Type, struct buf *ob, const struct buf *link, const struct buf *title = NULL, const struct buf *alt = NULL);
 		void createSpan(const Element&, struct buf *ob);
 		void appendElementMarker(struct buf *ob);
 		void eraseTrailingControlCharacters(const std::string& controlCharacters);

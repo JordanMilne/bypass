@@ -18,60 +18,58 @@
 
 using namespace std;
 
-static void rndr_blockcode(struct buf *ob, struct buf *text, void *opaque);
-static void rndr_blockquote(struct buf *ob, struct buf *text, void *opaque);
-static void rndr_header(struct buf *ob, struct buf *text, int level, void *opaque);
+static void rndr_blockcode(struct buf *ob, const struct buf *text, const struct buf *lang, void *opaque);
+static void rndr_blockquote(struct buf *ob, const struct buf *text, void *opaque);
+static void rndr_header(struct buf *ob, const struct buf *text, int level, void *opaque);
 static void rndr_hrule(struct buf *ob, void *opaque);
-static void rndr_list(struct buf *ob, struct buf *text, int flags, void *opaque);
-static void rndr_listitem(struct buf *ob, struct buf *text, int flags, void *opaque);
-static void rndr_paragraph(struct buf *ob, struct buf *text, void *opaque);
-static int rndr_autolink(struct buf *ob, struct buf *link, enum mkd_autolink type, void *opaque);
-static int rndr_codespan(struct buf *ob, struct buf *text, void *opaque);
-static int rndr_double_emphasis(struct buf *ob, struct buf *text, char c, void *opaque);
-static int rndr_emphasis(struct buf *ob, struct buf *text, char c, void *opaque);
-static int rndr_image(struct buf *ob, struct buf *link, struct buf *title, struct buf *alt, void *opaque);
-static int rndr_triple_emphasis(struct buf *ob, struct buf *text, char c, void *opaque);
+static void rndr_list(struct buf *ob, const struct buf *text, int flags, void *opaque);
+static void rndr_listitem(struct buf *ob, const struct buf *text, int flags, void *opaque);
+static void rndr_paragraph(struct buf *ob, const struct buf *text, void *opaque);
+static int rndr_autolink(struct buf *ob, const struct buf *link, enum mkd_autolink type, void *opaque);
+static int rndr_codespan(struct buf *ob, const struct buf *text, void *opaque);
+static int rndr_double_emphasis(struct buf *ob, const struct buf *text, void *opaque);
+static int rndr_emphasis(struct buf *ob, const struct buf *text, void *opaque);
+static int rndr_image(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *alt, void *opaque);
+static int rndr_triple_emphasis(struct buf *ob, const struct buf *text, void *opaque);
+static int rndr_strikethrough(struct buf *ob, const struct buf *text, void *opaque);
 static int rndr_linebreak(struct buf *ob, void *opaque);
-static int rndr_link(struct buf *ob, struct buf *link, struct buf *title, struct buf *content, void *opaque);
-static void rndr_normal_text(struct buf *ob, struct buf *text, void *opaque);
+static int rndr_link(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *content, void *opaque);
+static void rndr_normal_text(struct buf *ob, const struct buf *text, void *opaque);
 
-struct mkd_renderer mkd_callbacks = {
-	/* document-level callbacks */
-	NULL,                 // prolog
-	NULL,                 // epilogue
-
+const struct sd_callbacks mkd_callbacks = {
 	/* block-level callbacks */
-	rndr_blockcode,       // block code
-	rndr_blockquote,      // block quote
-	NULL,                 // block html
-	rndr_header,          // header
-	rndr_hrule,           // hrule
-	rndr_list,            // list
-	rndr_listitem,        // listitem
-	rndr_paragraph,       // paragraph
-	NULL,                 // table
-	NULL,                 // table cell
-	NULL,                 // table row
+	.blockcode = rndr_blockcode,       // block code
+	.blockquote = rndr_blockquote,     // block quote
+	.blockhtml = NULL,                 // block html
+	.header = rndr_header,             // header
+	.hrule = rndr_hrule,               // hrule
+	.list = rndr_list,                 // list
+	.listitem = rndr_listitem,         // listitem
+	.paragraph = rndr_paragraph,       // paragraph
+	.table = NULL,                     // table
+	.table_row = NULL,                 // table cell
+	.table_cell = NULL,                // table row
 
 	/* span-level callbacks */
-	rndr_autolink,        // autolink
-	rndr_codespan,        // codespan
-	rndr_double_emphasis, // double emphasis
-	rndr_emphasis,        // emphasis
-	rndr_image,           // image
-	rndr_linebreak,       // line break
-	rndr_link,            // link
-	NULL,                 // raw html tag
-	rndr_triple_emphasis, // triple emphasis
+	.autolink = rndr_autolink,         // autolink
+	.codespan = rndr_codespan,         // codespan
+	.double_emphasis = rndr_double_emphasis, // double emphasis
+	.emphasis = rndr_emphasis,         // emphasis
+	.image = rndr_image,               // image
+	.linebreak = rndr_linebreak,       // line break
+	.link = rndr_link,                 // link
+	.raw_html_tag = NULL,              // raw html tag
+	.triple_emphasis = rndr_triple_emphasis, // triple emphasis
+    .strikethrough = rndr_strikethrough, // strikethrough
+    .superscript = NULL,
 
 	/* low-level callbacks */
-	NULL,                 // entity
-	rndr_normal_text,     // normal text
+	.entity = NULL,                    // entity
+	.normal_text = rndr_normal_text,   // normal text
 
-	/* renderer data */
-	64, // max stack
-	"*_~",
-	NULL // opaque
+	/* header and footer */
+    .doc_header = NULL,                 // header
+    .doc_footer = NULL,                 // footer
 };
 
 namespace Bypass {
@@ -100,10 +98,10 @@ namespace Bypass {
 
 			ob = bufnew(OUTPUT_UNIT);
 
-			mkd_callbacks.opaque = this;
+            struct sd_markdown *markdown = sd_markdown_new(0, 16, 64, &mkd_callbacks, this);
 
 			//parse and assemble document
-			markdown(ob, ib, &mkd_callbacks);
+            sd_markdown_render(ob, (const uint8_t *)mkd, strlen(mkd), markdown);
 
 			for (std::map<int, Element>::iterator it = elementSoup.begin(); it != elementSoup.end(); ++it) {
 				document.append(it->second);
@@ -142,7 +140,7 @@ namespace Bypass {
 
 	// Block Element Callbacks
 
-	void Parser::handleBlock(Type type, struct buf *ob, struct buf *text, int extra) {
+	void Parser::handleBlock(Type type, struct buf *ob, const struct buf *text, int extra) {
 		Element block;
 		block.setType(type);
 
@@ -178,21 +176,21 @@ namespace Bypass {
 		appendElementMarker(ob);
 	}
 
-	void Parser::parsedBlockCode(struct buf *ob, struct buf *text) {
+	void Parser::parsedBlockCode(struct buf *ob, const struct buf *text, const struct buf *lang) {
 		if(!text) return; // Analyze seems to believe that text can be null here
 		parsedNormalText(ob, text);
 		eraseTrailingControlCharacters(NEWLINE);
 
-		bufreset(text);
-		appendElementMarker(text);
-		handleBlock(BLOCK_CODE, ob, text);
+        struct buf *markerBuf = bufnew(text->unit);
+		appendElementMarker(markerBuf);
+		handleBlock(BLOCK_CODE, ob, markerBuf);
 	}
 
-	void Parser::parsedBlockQuote(struct buf *ob, struct buf *text) {
+	void Parser::parsedBlockQuote(struct buf *ob, const struct buf *text) {
 		handleBlock(BLOCK_QUOTE, ob, text);
 	}
 
-	void Parser::parsedHeader(struct buf *ob, struct buf *text, int level) {
+	void Parser::parsedHeader(struct buf *ob, const struct buf *text, int level) {
 		handleBlock(HEADER, ob, text, level);
 	}
 
@@ -200,21 +198,21 @@ namespace Bypass {
 		handleBlock(HRULE, ob);
 	}
 
-	void Parser::parsedList(struct buf *ob, struct buf *text, int flags) {
+	void Parser::parsedList(struct buf *ob, const struct buf *text, int flags) {
 		handleBlock(LIST, ob, text, flags);
 	}
 
-	void Parser::parsedListItem(struct buf *ob, struct buf *text, int flags) {
+	void Parser::parsedListItem(struct buf *ob, const struct buf *text, int flags) {
 		handleBlock(LIST_ITEM, ob, text);
 	}
 
-	void Parser::parsedParagraph(struct buf *ob, struct buf *text) {
+	void Parser::parsedParagraph(struct buf *ob, const struct buf *text) {
 		handleBlock(PARAGRAPH, ob, text);
 	}
 
 	// Span Element Callbacks
 
-	void Parser::handleSpan(Type type, struct buf *ob, struct buf *text, struct buf *extra, struct buf *extra2, bool output) {
+	void Parser::handleSpan(Type type, struct buf *ob, const struct buf *text, const struct buf *extra, const struct buf *extra2, bool output) {
 
 		std::vector<std::string> strs;
 		std::string textString;
@@ -262,7 +260,7 @@ namespace Bypass {
 		}
 	}
 
-	void Parser::handleNontextSpan(Type type, struct buf *ob, struct buf *link, struct buf *title, struct buf *alt) {
+	void Parser::handleNontextSpan(Type type, struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *alt) {
 		Element element;
 		element.setType(type);
 
@@ -297,51 +295,42 @@ namespace Bypass {
 		appendElementMarker(ob);
 	}
 
-	int Parser::parsedDoubleEmphasis(struct buf *ob, struct buf *text, char c) {
-        if (c == '~') {
-            handleSpan(STRIKETHROUGH, ob, text);
-        } else {
-            handleSpan(DOUBLE_EMPHASIS, ob, text);
-        }
+	int Parser::parsedDoubleEmphasis(struct buf *ob, const struct buf *text) {
+        handleSpan(DOUBLE_EMPHASIS, ob, text);
 		return 1;
 	}
 
-	int Parser::parsedEmphasis(struct buf *ob, struct buf *text, char c) {
-        if (c == '~') {
-            handleSpan(STRIKETHROUGH, ob, text, NULL, NULL, false);
-            return 0;
-        } else {
-            handleSpan(EMPHASIS, ob, text);
-            return 1;
-        }
+	int Parser::parsedEmphasis(struct buf *ob, const struct buf *text) {
+        handleSpan(EMPHASIS, ob, text);
+        return 1;
 	}
 
-	int Parser::parsedImage(struct buf *ob, struct buf *link, struct buf *title, struct buf *alt) {
+	int Parser::parsedImage(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *alt) {
 		handleNontextSpan(IMAGE, ob, link, title, alt);
 		return 1;
 	}
 
-	int Parser::parsedTripleEmphasis(struct buf *ob, struct buf *text, char c) {
-		if (c == '~') {
-            handleSpan(STRIKETHROUGH, ob, text, NULL, NULL, false);
-            return 0;
-        } else {
-            handleSpan(TRIPLE_EMPHASIS, ob, text);
-            return 1;
-        }
+	int Parser::parsedTripleEmphasis(struct buf *ob, const struct buf *text) {
+        handleSpan(TRIPLE_EMPHASIS, ob, text);
+        return 1;
 	}
 
-	int Parser::parsedLink(struct buf *ob, struct buf *link, struct buf *title, struct buf *content) {
+    int Parser::parsedStrikethrough(struct buf *ob, const struct buf *text) {
+        handleSpan(STRIKETHROUGH, ob, text);
+        return 0;
+    }
+
+	int Parser::parsedLink(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *content) {
 		handleSpan(LINK, ob, content, link, title);
 		return 1;
 	}
 
-	int Parser::parsedAutolink(struct buf *ob, struct buf *link, enum mkd_autolink type) {
+	int Parser::parsedAutolink(struct buf *ob, const struct buf *link, enum mkd_autolink type) {
 		handleNontextSpan(AUTOLINK, ob, link);
 		return 1;
 	}
 
-	int Parser::parsedCodeSpan(struct buf *ob, struct buf *text) {
+	int Parser::parsedCodeSpan(struct buf *ob, const struct buf *text) {
 		if (text && text->size > 0) {
 			Element codeSpan;
 			codeSpan.setType(CODE_SPAN);
@@ -359,7 +348,7 @@ namespace Bypass {
 
 	// Low Level Callbacks
 
-	void Parser::parsedNormalText(struct buf *ob, struct buf *text) {
+	void Parser::parsedNormalText(struct buf *ob, const struct buf *text) {
 		// The parser will spuriously emit a text callback for an empty string
 		// that butts up against a span-level element. This will ignore it.
 
@@ -375,15 +364,15 @@ namespace Bypass {
 
 // Block Element callbacks
 
-static void rndr_blockcode(struct buf *ob, struct buf *text, void *opaque) {
-	((Bypass::Parser*) opaque)->parsedBlockCode(ob, text);
+static void rndr_blockcode(struct buf *ob, const struct buf *text, const struct buf *lang, void *opaque) {
+	((Bypass::Parser*) opaque)->parsedBlockCode(ob, text, lang);
 }
 
-static void rndr_blockquote(struct buf *ob, struct buf *text, void *opaque) {
+static void rndr_blockquote(struct buf *ob, const struct buf *text, void *opaque) {
 	((Bypass::Parser*) opaque)->parsedBlockQuote(ob, text);
 }
 
-static void rndr_header(struct buf *ob, struct buf *text, int level, void *opaque) {
+static void rndr_header(struct buf *ob, const struct buf *text, int level, void *opaque) {
 	((Bypass::Parser*) opaque)->parsedHeader(ob, text, level);
 }
 
@@ -391,55 +380,59 @@ static void rndr_hrule(struct buf *ob, void *opaque) {
 	((Bypass::Parser*) opaque)->parsedHrule(ob);
 }
 
-static void rndr_list(struct buf *ob, struct buf *text, int flags, void *opaque) {
+static void rndr_list(struct buf *ob, const struct buf *text, int flags, void *opaque) {
 	((Bypass::Parser*) opaque)->parsedList(ob, text, flags);
 }
 
-static void rndr_listitem(struct buf *ob, struct buf *text, int flags, void *opaque) {
+static void rndr_listitem(struct buf *ob, const struct buf *text, int flags, void *opaque) {
 	((Bypass::Parser*) opaque)->parsedListItem(ob, text, flags);
 }
 
-static void rndr_paragraph(struct buf *ob, struct buf *text, void *opaque) {
+static void rndr_paragraph(struct buf *ob, const struct buf *text, void *opaque) {
 	((Bypass::Parser*) opaque)->parsedParagraph(ob, text);
 }
 
 // Span Element callbacks
 
-static int rndr_autolink(struct buf *ob, struct buf *link, enum mkd_autolink type, void *opaque) {
+static int rndr_autolink(struct buf *ob, const struct buf *link, enum mkd_autolink type, void *opaque) {
 	return ((Bypass::Parser*) opaque)->parsedAutolink(ob, link, type);
 }
 
-static int rndr_codespan(struct buf *ob, struct buf *text, void *opaque) {
+static int rndr_codespan(struct buf *ob, const struct buf *text, void *opaque) {
 	return ((Bypass::Parser*) opaque)->parsedCodeSpan(ob, text);
 }
 
-static int rndr_double_emphasis(struct buf *ob, struct buf *text, char c, void *opaque) {
-	return ((Bypass::Parser*) opaque)->parsedDoubleEmphasis(ob, text, c);
+static int rndr_double_emphasis(struct buf *ob, const struct buf *text, void *opaque) {
+	return ((Bypass::Parser*) opaque)->parsedDoubleEmphasis(ob, text);
 }
 
-static int rndr_emphasis(struct buf *ob, struct buf *text, char c, void *opaque) {
-	return ((Bypass::Parser*) opaque)->parsedEmphasis(ob, text, c);
+static int rndr_emphasis(struct buf *ob, const struct buf *text, void *opaque) {
+	return ((Bypass::Parser*) opaque)->parsedEmphasis(ob, text);
 }
 
-static int rndr_image(struct buf *ob, struct buf *link, struct buf *title, struct buf *alt, void *opaque) {
+static int rndr_image(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *alt, void *opaque) {
 	return ((Bypass::Parser*) opaque)->parsedImage(ob, link, title, alt);
 }
 
-static int rndr_triple_emphasis(struct buf *ob, struct buf *text, char c, void *opaque) {
-	return ((Bypass::Parser*) opaque)->parsedTripleEmphasis(ob, text, c);
+static int rndr_triple_emphasis(struct buf *ob, const struct buf *text, void *opaque) {
+	return ((Bypass::Parser*) opaque)->parsedTripleEmphasis(ob, text);
+}
+
+static int rndr_strikethrough(struct buf *ob, const struct buf *text, void *opaque) {
+	return ((Bypass::Parser*) opaque)->parsedStrikethrough(ob, text);
 }
 
 static int rndr_linebreak(struct buf *ob, void *opaque) {
 	return ((Bypass::Parser*) opaque)->parsedLinebreak(ob);
 }
 
-static int rndr_link(struct buf *ob, struct buf *link, struct buf *title, struct buf *content, void *opaque) {
+static int rndr_link(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *content, void *opaque) {
 	return ((Bypass::Parser*) opaque)->parsedLink(ob, link, title, content);
 }
 
 //	Low Level Callbacks
 
-static void rndr_normal_text(struct buf *ob, struct buf *text, void *opaque) {
+static void rndr_normal_text(struct buf *ob, const struct buf *text, void *opaque) {
 	return ((Bypass::Parser*) opaque)->parsedNormalText(ob, text);
 }
 
