@@ -1,11 +1,11 @@
-LIBSOLDOUT_DIR = libsoldout
+SNUDOWN_DIR = snudown
 
-.PHONY: all libsoldout clean
+.PHONY: all snudown clean
 
-all: libsoldout
+all: snudown
 
-libsoldout:
-	$(MAKE) -C $(LIBSOLDOUT_DIR)
+snudown:
+	 cd $(SNUDOWN_DIR) && python setup.py build
 
 clean:
-	$(MAKE) -C $(LIBSOLDOUT_DIR) clean
+	 cd $(SNUDOWN_DIR) && python setup.py clean
