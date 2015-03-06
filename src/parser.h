@@ -70,6 +70,7 @@ namespace Bypass {
 
 		// Low Level Callbacks
 
+		void parsedEntity(struct buf *ob, const struct buf *entity);
 		void parsedNormalText(struct buf *ob, const struct buf *text);
 
 		// Debugging

@@ -16,6 +16,8 @@
 
 #include "parser.h"
 
+#include "houdini.h"
+
 using namespace std;
 
 static void rndr_blockcode(struct buf *ob, const struct buf *text, const struct buf *lang, void *opaque);
@@ -34,6 +36,7 @@ static int rndr_triple_emphasis(struct buf *ob, const struct buf *text, void *op
 static int rndr_strikethrough(struct buf *ob, const struct buf *text, void *opaque);
 static int rndr_linebreak(struct buf *ob, void *opaque);
 static int rndr_link(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *content, void *opaque);
+static void rndr_entity(struct buf *ob, const struct buf *entity, void *opaque);
 static void rndr_normal_text(struct buf *ob, const struct buf *text, void *opaque);
 
 const struct sd_callbacks mkd_callbacks = {
@@ -64,7 +67,7 @@ const struct sd_callbacks mkd_callbacks = {
     .superscript = NULL,
 
 	/* low-level callbacks */
-	.entity = NULL,                    // entity
+	.entity = rndr_entity,             // entity
 	.normal_text = rndr_normal_text,   // normal text
 
 	/* header and footer */
@@ -348,6 +351,20 @@ namespace Bypass {
 
 	// Low Level Callbacks
 
+	void Parser::parsedEntity(struct buf *ob, const struct buf *entity) {
+		struct buf *entityOb = bufnew(entity->size);
+		houdini_unescape_html(entityOb, entity->data, entity->size);
+
+		if (entityOb && entityOb->size > 0) {
+			Element entityText;
+			entityText.setType(TEXT);
+			entityText.text.assign(entityOb->data, entityOb->data + entityOb->size);
+			createSpan(entityText, ob);
+		}
+
+		bufrelease(entityOb);
+	}
+
 	void Parser::parsedNormalText(struct buf *ob, const struct buf *text) {
 		// The parser will spuriously emit a text callback for an empty string
 		// that butts up against a span-level element. This will ignore it.
@@ -431,6 +448,10 @@ static int rndr_link(struct buf *ob, const struct buf *link, const struct buf *t
 }
 
 //	Low Level Callbacks
+
+static void rndr_entity(struct buf *ob, const struct buf *entity, void *opaque) {
+	return ((Bypass::Parser*) opaque)->parsedEntity(ob, entity);
+}
 
 static void rndr_normal_text(struct buf *ob, const struct buf *text, void *opaque) {
 	return ((Bypass::Parser*) opaque)->parsedNormalText(ob, text);
