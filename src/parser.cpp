@@ -352,17 +352,19 @@ namespace Bypass {
 	// Low Level Callbacks
 
 	void Parser::parsedEntity(struct buf *ob, const struct buf *entity) {
-		struct buf *entityOb = bufnew(entity->size);
-		houdini_unescape_html(entityOb, entity->data, entity->size);
+        // Hackily use houding buffer type instead
+        gh_buf entityOb;
+        gh_buf_init(&entityOb, entity->size);
+		houdini_unescape_html(&entityOb, entity->data, entity->size);
 
-		if (entityOb && entityOb->size > 0) {
+		if (entityOb.size > 0) {
 			Element entityText;
 			entityText.setType(TEXT);
-			entityText.text.assign(entityOb->data, entityOb->data + entityOb->size);
+			entityText.text.assign(entityOb.ptr, entityOb.ptr + entityOb.size);
 			createSpan(entityText, ob);
 		}
 
-		bufrelease(entityOb);
+        gh_buf_free(&entityOb);
 	}
 
 	void Parser::parsedNormalText(struct buf *ob, const struct buf *text) {
