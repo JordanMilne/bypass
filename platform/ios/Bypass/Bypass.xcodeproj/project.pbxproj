@@ -506,6 +506,7 @@
 				BOOST_HOME = "${SRCROOT}/../../../dep/boost";
 				BUNDLE_LOADER = "";
 				DSTROOT = /tmp/Bypass.dst;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				HEADER_SEARCH_PATHS = "$(BOOST_HOME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
@@ -520,6 +521,7 @@
 				BOOST_HOME = "${SRCROOT}/../../../dep/boost";
 				BUNDLE_LOADER = "";
 				DSTROOT = /tmp/Bypass.dst;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				HEADER_SEARCH_PATHS = "$(BOOST_HOME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
