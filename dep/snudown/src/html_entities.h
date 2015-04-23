@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.0.3 */
-/* Command-line: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/gperf --output-file html_entities.h html_entities.gperf  */
+/* Command-line: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/gperf --output-file=src/html_entities.h src/html_entities.gperf  */
 /* Computed positions: -k'2-7' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -29,7 +29,7 @@
 #error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
 #endif
 
-#line 8 "html_entities.gperf"
+#line 8 "src/html_entities.gperf"
 
 #include <stdlib.h>
 
@@ -39,7 +39,7 @@ const u_int32_t MAX_NUM_ENTITY_VAL = 0x10ffff;
  * used to avoid dealing with overflows. */
 const size_t MAX_NUM_ENTITY_LEN = 7;
 
-inline int is_valid_numeric_entity(uint32_t entity_val)
+__attribute__((always_inline)) inline int is_valid_numeric_entity(uint32_t entity_val)
 {
 	/* Some XML parsers will choke on entities with certain
 	 * values (mostly control characters.)
